@@ -1,19 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_200"
-    tools:context=".ScoreActivity">
+    android:orientation="vertical"
+    android:background="@android:color/white">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/score_LBL_status"
+    <!-- Title -->
+    <TextView
+        android:id="@+id/highscore_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🏆 Top Scores"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:padding="16dp" />
+
+    <!-- Scrollable Highscore List Fragment -->
+    <FrameLayout
+        android:id="@+id/highscore_list_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:paddingBottom="8dp" />
+
+    <!-- Google Map Fragment -->
+    <FrameLayout
+        android:id="@+id/highscore_map_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="4dp" />
+
+    <Button
+        android:id="@+id/button_reset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textSize="@dimen/status_size"
-        android:gravity="center"
-        android:text="TextView" />
-</RelativeLayout>
+        android:text="Reset Highscores"
+        android:layout_margin="8dp"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

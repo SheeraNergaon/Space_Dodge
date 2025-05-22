@@ -1,42 +1,52 @@
 package com.example.myapplicationhw1
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.google.android.material.textview.MaterialTextView
-import com.example.myapplicationhw1.Utilities.Constants
 
+class ScoreActivity : AppCompatActivity(), OnHighscoreClickListener {
 
-class ScoreActivity : AppCompatActivity() {
-
-    private lateinit var score_LBL_status: MaterialTextView
-
+    private lateinit var resetButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_score)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        resetButton = findViewById(R.id.button_reset)
+
+        val highscores = HighscoreStorage.load(this)
+        val latestEntry = highscores.lastOrNull()
+
+        val mapFragment = HighscoreMapFragment()
+        val listFragment = HighscoreListFragment()
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.highscore_list_container, listFragment)
+            .replace(R.id.highscore_map_container, mapFragment)
+            .commit()
+
+        // Button to clear highscores
+        resetButton.setOnClickListener {
+            HighscoreStorage.clear(this)
+            Toast.makeText(this, "Highscores reset", Toast.LENGTH_SHORT).show()
+
+            val emptyList = emptyList<HighscoreEntry>()
+            listFragment.updateHighscores(emptyList)
+            mapFragment.setHighscores(emptyList)
         }
 
-        findViews()
-        initViews()
+        // Update fragments after they are attached
+        window.decorView.post {
+            mapFragment.setHighscores(highscores)
+            latestEntry?.let { mapFragment.updateLocation(it) }
+            listFragment.updateHighscores(highscores)
+        }
     }
 
-    private fun findViews() {
-        score_LBL_status = findViewById(R.id.score_LBL_status)
+    override fun onHighscoreClicked(highscore: HighscoreEntry) {
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.highscore_map_container) as? HighscoreMapFragment
+        mapFragment?.updateLocation(highscore)
     }
-
-
-    private fun initViews() {
-        val bundle: Bundle? = intent.extras
-        val message = bundle?.getString(Constants.BundleKeys.MESSAGE_KEY, "🤷🏻‍♂️ Unknown Status")
-        score_LBL_status.text = message
-    }
-
 }
