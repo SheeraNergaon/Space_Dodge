@@ -5,5 +5,7 @@ data class HighscoreEntry(
     val score: Int,
     val distance: Int,
     val latitude: Double,
-    val longitude: Double
+    val longitude: Double,
+    val city: String,
+    val country: String
 )

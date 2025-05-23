@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.widget.Button
@@ -12,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
+import java.util.Locale
 
 class GameOverActivity : AppCompatActivity() {
 
@@ -54,6 +56,7 @@ class GameOverActivity : AppCompatActivity() {
             }
         }
     }
+
     @SuppressLint("MissingPermission")
     private fun saveHighscoreWithLocation() {
         val name = nameInput.text.toString().ifBlank { "Anonymous" }
@@ -62,8 +65,9 @@ class GameOverActivity : AppCompatActivity() {
             .addOnSuccessListener { location: Location? ->
                 val lat = location?.latitude ?: 0.0
                 val lng = location?.longitude ?: 0.0
+                val (city, country) = getCityAndCountry(lat, lng)
 
-                val highscore = HighscoreEntry(name, score, distance, lat, lng)
+                val highscore = HighscoreEntry(name, score, distance, lat, lng, city, country)
                 HighscoreStorage.save(this, highscore)
 
                 startActivity(Intent(this, ScoreActivity::class.java))
@@ -71,7 +75,29 @@ class GameOverActivity : AppCompatActivity() {
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Failed to get location", Toast.LENGTH_SHORT).show()
+                val highscore = HighscoreEntry(name, score, distance, 0.0, 0.0, "Unknown", "Unknown")
+                HighscoreStorage.save(this, highscore)
+
+                startActivity(Intent(this, ScoreActivity::class.java))
+                finish()
             }
+    }
+
+    private fun getCityAndCountry(lat: Double, lng: Double): Pair<String, String> {
+        return try {
+            val geocoder = Geocoder(this, Locale.getDefault())
+            val addresses = geocoder.getFromLocation(lat, lng, 1)
+            if (!addresses.isNullOrEmpty()) {
+                val city = addresses[0].locality ?: "Unknown"
+                val country = addresses[0].countryName ?: "Unknown"
+                Pair(city, country)
+            } else {
+                Pair("Unknown", "Unknown")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Pair("Unknown", "Unknown")
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -81,16 +107,12 @@ class GameOverActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if (requestCode == LOCATION_REQUEST_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                saveHighscoreWithLocation()
-            } else {
-                Toast.makeText(
-                    this,
-                    "Location permission is required to save your score location.",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
+        if (requestCode == LOCATION_REQUEST_CODE && grantResults.isNotEmpty() &&
+            grantResults[0] == PackageManager.PERMISSION_GRANTED
+        ) {
+            saveHighscoreWithLocation()
+        } else {
+            Toast.makeText(this, "Location permission is required to save your score location.", Toast.LENGTH_LONG).show()
         }
     }
 }
