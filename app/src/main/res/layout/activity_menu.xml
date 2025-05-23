@@ -1,0 +1,53 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Background image -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/space_bg" />
+
+    <!-- Overlay UI with transparency -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="24dp"
+        android:background="#AA407BC8">
+
+
+        <Switch
+            android:id="@+id/switch_fast_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Speed: Normal"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:padding="12dp"
+            />
+
+
+        <Switch
+            android:id="@+id/switch_sensor_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sensor: Off"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:padding="12dp"
+            />
+        <Button
+            android:id="@+id/menu_BTN_start_game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Game"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:padding="12dp"
+            />
+
+    </LinearLayout>
+</FrameLayout>

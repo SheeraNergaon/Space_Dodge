@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#407BC8"
+    android:background="@drawable/space_lanes_5"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -44,6 +44,24 @@
                 android:layout_height="40dp"
                 app:srcCompat="@drawable/heart" />
         </LinearLayout>
+        <!-- Score Text -->
+        <TextView
+            android:id="@+id/main_LBL_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Score: 0"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:paddingStart="8dp" />
+
+        <TextView
+            android:id="@+id/main_LBL_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Distance: 0"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:paddingStart="16dp" />
 
     </LinearLayout>
 
@@ -58,21 +76,11 @@
             android:id="@+id/main_grid_matrix"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:columnCount="3"
-            android:rowCount="6"
+            android:columnCount="5"
+            android:rowCount="10"
             android:useDefaultMargins="false"
             android:alignmentMode="alignMargins" />
 
-        <!--        &lt;!&ndash; Spaceship at bottom &ndash;&gt;-->
-        <!--        <androidx.appcompat.widget.AppCompatImageView-->
-        <!--            android:id="@+id/main_IMG_spaceship"-->
-        <!--            android:layout_width="100dp"-->
-        <!--            android:layout_height="100dp"-->
-        <!--            android:layout_gravity="bottom|center_horizontal"-->
-        <!--            android:layout_marginBottom="16dp"-->
-        <!--            android:contentDescription="space_rocket"-->
-        <!--            android:scaleType="fitCenter"-->
-        <!--            app:srcCompat="@drawable/space_rocket" />-->
     </FrameLayout>
 
     <!-- Buttons layout -->
@@ -103,4 +111,6 @@
             android:backgroundTint="#0E2395"
             android:text="Right" />
     </LinearLayout>
+
+
 </LinearLayout>
