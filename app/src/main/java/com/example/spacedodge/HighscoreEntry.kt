@@ -1,4 +1,4 @@
-package com.example.myapplicationhw1
+package com.example.spacedodge
 
 data class HighscoreEntry(
     val name: String,
@@ -6,6 +6,4 @@ data class HighscoreEntry(
     val distance: Int,
     val latitude: Double,
     val longitude: Double,
-    val city: String,
-    val country: String
 )

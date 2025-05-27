@@ -1,24 +1,24 @@
-package com.example.myapplicationhw1
+package com.example.spacedodge
 
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
-import java.util.Locale
 
 class GameOverActivity : AppCompatActivity() {
 
     private lateinit var nameInput: EditText
     private lateinit var saveButton: Button
+    private lateinit var messageTextView: TextView
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     private var score: Int = 0
@@ -34,9 +34,17 @@ class GameOverActivity : AppCompatActivity() {
 
         nameInput = findViewById(R.id.input_name)
         saveButton = findViewById(R.id.button_save)
+        messageTextView = findViewById(R.id.game_over_message)
 
         score = intent.getIntExtra("EXTRA_SCORE", 0)
         distance = intent.getIntExtra("EXTRA_DISTANCE", 0)
+
+        val qualifies = HighscoreStorage.qualifiesForHighscore(this, score)
+        messageTextView.text = if (qualifies && score > 0) {
+            "🎉 New High Score Set!"
+        } else {
+            "💪 Keep playing to qualify for the Top 10!"
+        }
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -65,9 +73,8 @@ class GameOverActivity : AppCompatActivity() {
             .addOnSuccessListener { location: Location? ->
                 val lat = location?.latitude ?: 0.0
                 val lng = location?.longitude ?: 0.0
-                val (city, country) = getCityAndCountry(lat, lng)
 
-                val highscore = HighscoreEntry(name, score, distance, lat, lng, city, country)
+                val highscore = HighscoreEntry(name, score, distance, lat, lng)
                 HighscoreStorage.save(this, highscore)
 
                 startActivity(Intent(this, ScoreActivity::class.java))
@@ -75,29 +82,12 @@ class GameOverActivity : AppCompatActivity() {
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Failed to get location", Toast.LENGTH_SHORT).show()
-                val highscore = HighscoreEntry(name, score, distance, 0.0, 0.0, "Unknown", "Unknown")
+                val highscore = HighscoreEntry(name, score, distance, 0.0, 0.0)
                 HighscoreStorage.save(this, highscore)
 
                 startActivity(Intent(this, ScoreActivity::class.java))
                 finish()
             }
-    }
-
-    private fun getCityAndCountry(lat: Double, lng: Double): Pair<String, String> {
-        return try {
-            val geocoder = Geocoder(this, Locale.getDefault())
-            val addresses = geocoder.getFromLocation(lat, lng, 1)
-            if (!addresses.isNullOrEmpty()) {
-                val city = addresses[0].locality ?: "Unknown"
-                val country = addresses[0].countryName ?: "Unknown"
-                Pair(city, country)
-            } else {
-                Pair("Unknown", "Unknown")
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Pair("Unknown", "Unknown")
-        }
     }
 
     override fun onRequestPermissionsResult(

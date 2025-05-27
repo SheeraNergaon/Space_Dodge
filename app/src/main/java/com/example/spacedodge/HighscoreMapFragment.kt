@@ -1,4 +1,4 @@
-package com.example.myapplicationhw1
+package com.example.spacedodge
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,19 +11,17 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 class HighscoreMapFragment : Fragment(), OnMapReadyCallback {
 
-    private lateinit var mapView: MapView
     private var googleMap: GoogleMap? = null
     private var highscoreList: List<HighscoreEntry> = listOf()
-    private var pendingLocation: HighscoreEntry? = null
+    private var pendingZoom: LatLng? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_highscore_map, container, false)
-        mapView = view.findViewById(R.id.mapView)
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
+        mapFragment?.getMapAsync(this)
         return view
     }
 
@@ -31,13 +29,11 @@ class HighscoreMapFragment : Fragment(), OnMapReadyCallback {
         googleMap = map
         googleMap?.uiSettings?.isZoomControlsEnabled = true
 
-        // Plot any previously saved list
         plotMarkers()
 
-        // If a specific location was waiting
-        pendingLocation?.let {
-            updateLocation(it)
-            pendingLocation = null
+        pendingZoom?.let {
+            zoom(it.latitude, it.longitude)
+            pendingZoom = null
         }
     }
 
@@ -46,14 +42,12 @@ class HighscoreMapFragment : Fragment(), OnMapReadyCallback {
         plotMarkers()
     }
 
-    fun updateLocation(entry: HighscoreEntry) {
-        googleMap?.let { map ->
-            val location = LatLng(entry.latitude, entry.longitude)
-            map.clear()
-            map.addMarker(MarkerOptions().position(location).title(entry.name))
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 14f))
+    fun zoom(lat: Double, lon: Double) {
+        val location = LatLng(lat, lon)
+        googleMap?.let {
+            it.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 15f)) // higher zoom
         } ?: run {
-            pendingLocation = entry
+            pendingZoom = location
         }
     }
 
@@ -65,31 +59,10 @@ class HighscoreMapFragment : Fragment(), OnMapReadyCallback {
                 map.addMarker(MarkerOptions().position(location).title(entry.name))
             }
 
-            // Optional zoom to the last entry
             highscoreList.lastOrNull()?.let { last ->
                 val lastLocation = LatLng(last.latitude, last.longitude)
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(lastLocation, 12f))
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mapView.onResume()
-    }
-
-    override fun onPause() {
-        mapView.onPause()
-        super.onPause()
-    }
-
-    override fun onDestroy() {
-        mapView.onDestroy()
-        super.onDestroy()
-    }
-
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView.onLowMemory()
     }
 }

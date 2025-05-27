@@ -9,7 +9,6 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <!-- Top bar: hearts and score -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +16,6 @@
         android:padding="16dp"
         android:gravity="center_vertical">
 
-        <!-- Hearts -->
         <LinearLayout
             android:id="@+id/main_heart_layout"
             android:layout_width="0dp"
@@ -44,7 +42,7 @@
                 android:layout_height="40dp"
                 app:srcCompat="@drawable/heart" />
         </LinearLayout>
-        <!-- Score Text -->
+
         <TextView
             android:id="@+id/main_LBL_score"
             android:layout_width="wrap_content"
@@ -65,13 +63,11 @@
 
     </LinearLayout>
 
-    <!-- Game Area - Takes up most of the screen -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <!-- GridLayout for the falling objects - full screen -->
         <GridLayout
             android:id="@+id/main_grid_matrix"
             android:layout_width="match_parent"
@@ -83,7 +79,6 @@
 
     </FrameLayout>
 
-    <!-- Buttons layout -->
     <LinearLayout
         android:id="@+id/buttons_layout"
         android:layout_width="match_parent"
