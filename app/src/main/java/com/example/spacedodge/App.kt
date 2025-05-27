@@ -1,7 +1,7 @@
-package com.example.myapplicationhw1
+package com.example.spacedodge
 
 import android.app.Application
-import com.example.myapplicationhw1.Utilities.SignalManager
+import com.example.spacedodge.Utilities.SignalManager
 
 
 class App: Application() {

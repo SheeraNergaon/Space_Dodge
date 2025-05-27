@@ -1,4 +1,4 @@
-package com.example.myapplicationhw1.Utilities
+package com.example.spacedodge.Utilities
 import android.content.Context
 import android.content.Context.VIBRATOR_MANAGER_SERVICE
 import android.content.Context.VIBRATOR_SERVICE

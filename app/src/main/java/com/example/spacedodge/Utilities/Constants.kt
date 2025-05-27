@@ -1,4 +1,4 @@
-package com.example.myapplicationhw1.Utilities
+package com.example.spacedodge.Utilities
 
 class Constants {
     object GameLogic {

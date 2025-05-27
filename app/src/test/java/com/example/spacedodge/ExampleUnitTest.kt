@@ -1,4 +1,4 @@
-package com.example.myapplicationhw1
+package com.example.spacedodge
 
 import org.junit.Test
 

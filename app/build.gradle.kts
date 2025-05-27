@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.myapplicationhw1"
+    namespace = "com.example.spacedodge"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.myapplicationhw1"
+        applicationId = "com.example.spacedodge"
         minSdk = 30
         targetSdk = 35
         versionCode = 1

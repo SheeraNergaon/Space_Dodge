@@ -1,17 +1,16 @@
-package com.example.myapplicationhw1
+package com.example.spacedodge
 
+import android.location.Geocoder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-
 class HighscoreAdapter(
     private var highscores: List<HighscoreEntry>,
     private val listener: (HighscoreEntry) -> Unit
 ) : RecyclerView.Adapter<HighscoreAdapter.ViewHolder>() {
 
-    // ViewHolder now includes references for name, score, distance, and location
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.item_name)
         val score: TextView = view.findViewById(R.id.item_score)
@@ -28,22 +27,29 @@ class HighscoreAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val entry = highscores[position]
 
-        // Bind the data to the ViewHolder
         holder.name.text = entry.name
         holder.score.text = "Score: ${entry.score}"
         holder.distance.text = "Distance: ${entry.distance}m"
-        holder.location.text = "Location: ${entry.city}, ${entry.country}"
 
-        // Set click listener for each item
+        val geocoder = Geocoder(holder.itemView.context)
+        val addresses = geocoder.getFromLocation(entry.latitude, entry.longitude, 1)
+        val address = if (!addresses.isNullOrEmpty()) {
+            addresses[0].getAddressLine(0) ?: "Unknown location"
+        } else {
+            "Unknown location"
+        }
+
+        holder.location.text = "Location: $address"
+
         holder.itemView.setOnClickListener { listener(entry) }
     }
 
-    // Method to update the data
+
     fun updateData(newList: List<HighscoreEntry>) {
         highscores = newList
         notifyDataSetChanged()
     }
 
-    // Return the number of items
     override fun getItemCount(): Int = highscores.size
 }
+

@@ -1,13 +1,14 @@
-package com.example.myapplicationhw1.Logic
+package com.example.spacedodge.Logic
 
 import kotlin.random.Random
-import com.example.myapplicationhw1.Utilities.SignalManager
-
+import com.example.spacedodge.Utilities.SignalManager
 
 class GameManager(
     private val numRows: Int = 10,
     private val numColumns: Int = 5,
-    private val lifeCount: Int = 3
+    private val lifeCount: Int = 3,
+    var onAsteroidHit: (() -> Unit)? = null,
+    var onStarCollected: (() -> Unit)? = null
 ) {
     private val matrix = Array(numRows) { IntArray(numColumns) { 0 } }
     private var firstTick = true
@@ -24,9 +25,8 @@ class GameManager(
     val isGameOver: Boolean
         get() = wrongAnswers >= lifeCount
 
-   var score: Int = 0
-         private set
-
+    var score: Int = 0
+        private set
 
     fun moveLeft() {
         if (spaceshipColumn > 0) spaceshipColumn--
@@ -37,13 +37,12 @@ class GameManager(
     }
 
     fun gameTick() {
-        wasHitThisTick = false  // Reset flag every tick
+        wasHitThisTick = false
 
         if (!firstTick) {
             moveObjectsDown()
             checkCollision()
         } else {
-            // Clear the top row to avoid double asteroid on first tick
             for (col in 0 until numColumns) {
                 matrix[0][col] = 0
             }
@@ -74,7 +73,6 @@ class GameManager(
         }
     }
 
-
     private fun checkCollision() {
         val objectAtPlayer = matrix[numRows - 1][spaceshipColumn]
 
@@ -84,16 +82,17 @@ class GameManager(
                 SignalManager.getInstance().vibrate()
                 SignalManager.getInstance().toast("BOOM!")
                 wasHitThisTick = true
+                onAsteroidHit?.invoke()
             }
             2 -> { // star
                 score += 10
                 SignalManager.getInstance().toast("⭐ +10 Points!")
+                onStarCollected?.invoke()
             }
         }
 
         matrix[numRows - 1][spaceshipColumn] = 0
     }
-
 
     fun getMatrix(): Array<IntArray> = matrix
 

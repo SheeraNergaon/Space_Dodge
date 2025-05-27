@@ -1,44 +1,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:padding="8dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layoutDirection="ltr">
+    android:orientation="vertical"
+    android:padding="12dp">
 
     <TextView
         android:id="@+id/item_name"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
         android:textStyle="bold"
-        android:textDirection="ltr"
-        android:gravity="start"/>
+        android:text="Player Name" />
 
     <TextView
         android:id="@+id/item_score"
-        android:layout_width="60dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Score"
-        android:textStyle="bold"
-        android:textDirection="ltr"
-        android:gravity="start"/>
+        android:text="Score: 50" />
 
     <TextView
         android:id="@+id/item_distance"
-        android:layout_width="60dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Distance"
-        android:textStyle="bold"
-        android:textDirection="ltr"
-        android:gravity="start"/>
+        android:text="Distance: 79m" />
 
     <TextView
         android:id="@+id/item_location"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Location"
-        android:textStyle="bold"
-        android:textDirection="ltr"
-        android:gravity="start"/>
+        android:text="Location: "
+        android:textSize="14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DDD"
+        android:layout_marginTop="8dp" />
+
 </LinearLayout>

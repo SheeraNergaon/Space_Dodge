@@ -1,53 +1,99 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- Background image -->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/space_bg" />
 
-    <!-- Overlay UI with transparency -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center"
-        android:padding="24dp"
-        android:background="#AA407BC8">
+        android:gravity="center_horizontal"
+        android:padding="32dp"
+        android:background="#AA000000"
+        android:layout_gravity="center">
 
-
-        <Switch
-            android:id="@+id/switch_fast_mode"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Speed: Normal"
-            android:textSize="20sp"
+            android:text="🚀 Space Dodge"
+            android:textSize="28sp"
+            android:textColor="@android:color/white"
             android:textStyle="bold"
-            android:padding="12dp"
-            />
+            android:layout_marginBottom="32dp"/>
 
-
-        <Switch
-            android:id="@+id/switch_sensor_mode"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sensor: Off"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:padding="12dp"
-            />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fast Mode"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:layout_marginEnd="12dp"/>
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/switch_fast_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:thumbTint="@color/white"
+                android:trackTint="@color/purple_500"
+                app:useMaterialThemeColors="true"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="32dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sensor Mode"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:layout_marginEnd="12dp"/>
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/switch_sensor_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:thumbTint="@color/white"
+                android:trackTint="@color/purple_500"
+                app:useMaterialThemeColors="true"/>
+        </LinearLayout>
+
         <Button
             android:id="@+id/menu_BTN_start_game"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Start Game"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:padding="12dp"
-            />
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/purple_500"
+            android:layout_marginBottom="16dp"/>
 
+        <Button
+            android:id="@+id/menu_BTN_view_scores"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="View High Scores"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/purple_500"/>
     </LinearLayout>
 </FrameLayout>

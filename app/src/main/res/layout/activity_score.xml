@@ -1,44 +1,52 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="@android:color/white">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <!-- Title -->
     <TextView
-        android:id="@+id/highscore_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="🏆 Top Scores"
         android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="center"
-        android:padding="16dp" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"/>
 
-    <!-- Scrollable Highscore List Fragment -->
     <FrameLayout
         android:id="@+id/highscore_list_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
-        android:paddingBottom="8dp" />
+        android:layout_weight="1"/>
 
-    <!-- Google Map Fragment -->
     <FrameLayout
         android:id="@+id/highscore_map_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingTop="4dp" />
+        android:layout_weight="1"/>
 
-    <Button
-        android:id="@+id/button_reset"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reset Highscores"
-        android:layout_margin="8dp"
-        android:layout_gravity="center_horizontal" />
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/button_play_again"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Play Again"
+            android:layout_marginEnd="16dp" />
+
+        <Button
+            android:id="@+id/button_reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reset Highscores" />
+    </LinearLayout>
 
 </LinearLayout>
+
+

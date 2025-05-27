@@ -1,4 +1,4 @@
-package com.example.myapplicationhw1
+package com.example.spacedodge
 
 import android.content.Context
 import com.google.gson.Gson
@@ -31,4 +31,10 @@ object HighscoreStorage {
         val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         prefs.edit().remove(KEY_HIGHSCORES).apply()
     }
+
+    fun qualifiesForHighscore(context: Context, newScore: Int): Boolean {
+        val currentList = load(context)
+        return currentList.size < 10 || newScore > (currentList.minByOrNull { it.score }?.score ?: 0)
+    }
+
 }
