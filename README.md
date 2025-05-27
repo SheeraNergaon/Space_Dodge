@@ -21,22 +21,14 @@
 ## 📸 Screenshots
 <img width="171" alt="Menu" src="https://github.com/user-attachments/assets/a0e884c6-5874-403c-b13c-7fb6c87fc7f1" />
 
+
+
+
 <img width="192" alt="Game Screen" src="https://github.com/user-attachments/assets/da19124d-6020-432f-a88d-e257f19e8c36" />
 
 
 ---
 
-## 📂 Project Structure
-
-- `MainActivity.kt` – Game loop, logic, and UI rendering
-- `GameOverActivity.kt` – Save your score after the game ends
-- `ScoreActivity.kt` – Displays highscore list and map
-- `HighscoreListFragment.kt` – List of top scores
-- `HighscoreMapFragment.kt` – Google Maps integration with markers
-- `HighscoreStorage.kt` – Persistent score storage using SharedPreferences
-- `MenuActivity.kt` – Main menu with mode switches
-
----
 
 ## 🗺️ Map Integration
 
@@ -96,3 +88,4 @@ Declared in `AndroidManifest.xml`:
 
 Made with ❤️ by **Sheera**  
 Feel free to fork, star, and contribute!
+Email: Sheera.Nergaon1@gmail.com
