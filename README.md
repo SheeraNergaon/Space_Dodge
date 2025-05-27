@@ -19,8 +19,10 @@
 ---
 
 ## 📸 Screenshots
+<img width="171" alt="Menu" src="https://github.com/user-attachments/assets/a0e884c6-5874-403c-b13c-7fb6c87fc7f1" />
 
-*(Add screenshots here if desired)*
+<img width="192" alt="Game Screen" src="https://github.com/user-attachments/assets/da19124d-6020-432f-a88d-e257f19e8c36" />
+
 
 ---
 
